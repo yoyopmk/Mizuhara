@@ -90,7 +90,7 @@ for more information.
 # Thanks To
 <a href="https://github.com/pratyush4932"><img src="https://github.com/pratyush4932.png?size=100" width="100" height="100"></a> | [![AMRIT](https://github.com/Amrit9304.png?size=100)](https://github.com/Amrit9304) 
 ---|---
-[Pratyush](https://github.com/pratyush4932)  | [Amrit](https://github.com/Amrit9304)
+[Pratyush](https://github.com/pratyush4932)  | [Amrit/Aizen](https://github.com/Amrit9304)
 Owner of Mizuhara | Contributor |
 <a href="https://github.com/iamherok"><img src="https://github.com/iamherok.png?size=100" width="100" height="100"></a> | [![Arin](https://github.com/Arin1601.png?size=100)](https://github.com/Arin1601) 
 [Tomioka](https://github.com/iamherok)  | [Arin](https://github.com/Arin1601)
