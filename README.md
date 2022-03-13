@@ -99,6 +99,6 @@ creator of Mizuhara | Contributor |
 <a href="https://github.com/iamherok"><img src="https://github.com/iamherok.png?size=100" width="100" height="100"></a> | [![Adiwajshing](https://github.com/adiwajshing.png?size=100)](https://github.com/adiwajshing) 
 [Tomioka](https://github.com/iamherok)  | [Adiwajshing](https://github.com/adiwajshing)
  | Owner of Baileys |
-<a href="https://github.com/Death-132"><img src="https://github.com/Death-132.png?size=100" width="100" height="100"></a>
-[Death](https://github.com/Death-132)
+<a href="https://github.com/Death-132"><img src="https://github.com/Death-132.png?size=100" width="100" height="100"></a> | [![Arin](https://github.com/Arin1601.png?size=100)](https://github.com/Arin1601)
+[Death](https://github.com/Death-132)   | [Arin](https://github.com/Arin1601)
 Developer
