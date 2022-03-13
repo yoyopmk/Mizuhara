@@ -45,10 +45,6 @@
 ## 💙 MIZUHARA 💙
 > This is a open source project by the TEAM ARUS. After forking don't do any change. If you do we will sue you for sure. If you wanna do any changes click the following Whatsapp icons and join our groups and contact the [Owner](https://wa.me/918231033230?text=Hi%20I%20Am%20From%20GitHub%20☺️) or moderators
 
-## HEROKU { UNDER DEVELOPMENT }
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Arus-Bots/Mizuhara)
-
-
 ## Requirements
 * [Node.js](https://nodejs.org/en/)
 * [Git](https://git-scm.com/downloads)
