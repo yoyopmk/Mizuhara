@@ -134,8 +134,8 @@ let charm = (items.includes('Exp Charm 💫️')) ? 2 : 1
                     var role = '⚔️ Master III' 
             var maxExp = 2750000
         } else { 
-                    var role = 'None'
-            var maxExp = 1000000
+                    var role = 'God'
+            var maxExp = 10000000
                 }
         return { role: role, maxE : maxExp }
 }    
@@ -241,11 +241,7 @@ const hlp=
 
 🎯 setgpfp
 
-🎯 disable
-     🍂 antilink
-     🍂 events
-
-🎯 disable
+🎯 enable/disable
     🍂 antilink
     🍂 events\`\`\`
 
