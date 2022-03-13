@@ -27,7 +27,7 @@ global.mess = {
     group: '*Leave me here alone please...*',
     wait: '*Loading... please wait*',
 }
-global.thumb = fs.readFileSync('./lib/hisoka.jpg')
+global.thumb = fs.readFileSync('./src/info.jpg')
 
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
