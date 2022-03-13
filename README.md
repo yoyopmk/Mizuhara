@@ -91,14 +91,14 @@ To keep it on forever
 Distributed under the GNU AFFERO GENERAL PUBLIC License. See [LICENSE](/LICENSE)
 for more information.
 
-# Thanks to
+# Thanks To
 <a href="https://github.com/pratyush4932"><img src="https://github.com/pratyush4932.png?size=100" width="100" height="100"></a> | [![AMRIT](https://github.com/Amrit9304.png?size=100)](https://github.com/Amrit9304) 
 ---|---
 [Pratyush](https://github.com/pratyush4932)  | [Amrit](https://github.com/Amrit9304)
-creator of Mizuhara | Contributor |
+Owner of Mizuhara | Contributor |
 <a href="https://github.com/iamherok"><img src="https://github.com/iamherok.png?size=100" width="100" height="100"></a> | [![Adiwajshing](https://github.com/adiwajshing.png?size=100)](https://github.com/adiwajshing) 
 [Tomioka](https://github.com/iamherok)  | [Adiwajshing](https://github.com/adiwajshing)
- | Owner of Baileys |
-<a href="https://github.com/Death-132"><img src="https://github.com/Death-132.png?size=100" width="100" height="100"></a> | [![Arin](https://telegra.ph/file/f6b066748d61491c3674b.jpg?size=50)](https://github.com/Arin1601)
-[Death](https://github.com/Death-132)   | [Arin](https://github.com/Arin1601)
-Developer
+Contributor | Owner of Baileys |
+<a href="https://github.com/Death-132"><img src="https://github.com/Death-132.png?size=100" width="100" height="100"></a>
+[Death](https://github.com/Death-132)
+Useless worker 
