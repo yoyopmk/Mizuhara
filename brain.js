@@ -134,7 +134,7 @@ let charm = (items.includes('Exp Charm 💫️')) ? 2 : 1
                     var role = '⚔️ Master III' 
             var maxExp = 2750000
         } else { 
-                    var role = 'God'
+                    var role = 'God👽'
             var maxExp = 10000000
                 }
         return { role: role, maxE : maxExp }
@@ -334,7 +334,7 @@ const mod=`❁ ════ ❃• *MODERATORS* •❃ ════ ❁
 
 #6
 💥 *Username: Manish*
-🍁 *Contact: https://wa.me/+919330880626*
+🍁 *Contact: https://wa.me/+919106196230*
 
 
 ━━━━°❀•°:🤍 *MIZUHARA* 🤍:°•❀°━━━━`
