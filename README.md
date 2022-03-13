@@ -74,6 +74,9 @@ To keep it on forever
 ## HELP
 > Please give this repo a ⭐ if you liked it.
 
+## PLANS
+> Hi it's Team-Arus here we are planning for more updates and there will be frequent updates until the next 2 weeks so make a fork of the repo and keep yourself updated.
+
 ## CONTRIBUTE
 
 > Feel free to open issues regarding any problems or
