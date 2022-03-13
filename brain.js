@@ -317,7 +317,7 @@ const mod=`❁ ════ ❃• *MODERATORS* •❃ ════ ❁
 🍁 *Contact: https://wa.me/+918231033230*
 
 #2
-💥 *Username: ZyXilf*
+💥 *Username: AiZen*
 🍂 *Contact: https://wa.me/+918709022955*
 
 #3
