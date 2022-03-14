@@ -60,7 +60,7 @@
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 ## Termux
-> We are very sorry but TERMUX isn't supported.
+> We are very sorry but TERMUX isn't supported right now we are working on alternatives.
 
 ## Clone this project
 ```bash
