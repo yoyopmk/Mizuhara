@@ -10,7 +10,8 @@
 <div align="center">
 <a href="https://c.tenor.com/G1jVjFnK_64AAAAC/chizuru-mizuhara.gif"><img src="https://c.tenor.com/G1jVjFnK_64AAAAC/chizuru-mizuhara.gif" alt="mizuhara" border="0"></a>
 
-# **MIZUHARA : ANIME THEMED FULL FLEDGED MULTI DEVICE WHATSAPP BOT WITH COOL FEATURES**
+# MIZUHARA 
+> **ANIME THEMED FULL FLEDGED MULTI DEVICE WHATSAPP BOT WITH COOL FEATURES**
 
 [![CodeFactor](https://www.codefactor.io/repository/github/arus-bots/mizuhara/badge)](https://www.codefactor.io/repository/github/arus-bots/mizuhara)
 
@@ -53,8 +54,9 @@
 * [FFmpeg](https://ffmpeg.org/download.html)
 
 ## DEPLOYMENT
+>For now you guys can only deploy on pc by following the installation process given below.
 
-## Heroku
+## Heroku (under development)
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 ## Termux
