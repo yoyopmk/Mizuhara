@@ -1,6 +1,5 @@
 /**
  * @author SomnathDas
- * More Updates Planned
 */
 
 const tweenTop = KUTE.fromTo(
