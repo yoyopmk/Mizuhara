@@ -14,4 +14,6 @@ RUN npm install
 
 COPY . .
 
+RUN heroku ps:scale web=1
+
 CMD ["node", "."]
