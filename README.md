@@ -50,6 +50,13 @@
 * [Git](https://git-scm.com/downloads)
 * [FFmpeg](https://ffmpeg.org/download.html)
 
+## DEPLOYMENT
+
+## Heroku
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+## Termux
+> We are very sorry but TERMUX isn't supported.
 
 ## Clone this project
 ```bash
