@@ -10,7 +10,9 @@
 <div align="center">
 <a href="https://c.tenor.com/G1jVjFnK_64AAAAC/chizuru-mizuhara.gif"><img src="https://c.tenor.com/G1jVjFnK_64AAAAC/chizuru-mizuhara.gif" alt="mizuhara" border="0"></a>
 
-# **MIZUHARA : ANIME THEMED MULTI DEVICE WHATSAPP BOT WITH COOL FEATURES**
+# **MIZUHARA : ANIME THEMED FULL FLEDGED MULTI DEVICE WHATSAPP BOT WITH COOL FEATURES**
+
+[![CodeFactor](https://www.codefactor.io/repository/github/arus-bots/mizuhara/badge)](https://www.codefactor.io/repository/github/arus-bots/mizuhara)
 
 </p>
 <p align="center">
