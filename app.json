@@ -1,8 +1,8 @@
 {
-  "name": "CheemsBot-MD",
-  "description": "whatsapp md bot build with nodejs",
-  "repository": "https://github.com/pratyush4932/CheemsBot-MD",
-  "logo": "https://pbs.twimg.com/media/FO7fojOakAAyYgt?format=jpg&name=900x900",
+  "name": "Mizuhara~Arus",
+  "description": "whatsapp multi device bot build with nodejs on baileys",
+  "repository": "https://github.com/Arus-Bots/Mizuhara/",
+  "logo": "https://telegra.ph/file/324ba754638d6b0f97b94.jpg",
   "keywords": ["nodejs", "bot", "whatsapp bot", "whatsapp automation", "multi device"],
   "buildpacks": [
     {
