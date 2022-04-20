@@ -305,7 +305,7 @@ const hlp=`
  🍁 *©Powered by Arus* 🍁`
   const hhbut = [
 {buttonId: '=info', buttonText: {displayText: '📤 Info'}, type: 1},
-{buttonId: '=help 1', buttonText: {displayText: '🧧 Help 1'}, type: 1}
+{buttonId: '=profile', buttonText: {displayText: '🧧 Profile'}, type: 1}
 ]
 let hbutto = {
         image: {url:"https://telegra.ph/file/9e58cb8f7cb23d7e7f94d.jpg"},
