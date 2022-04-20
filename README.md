@@ -50,6 +50,9 @@
 * [Git](https://git-scm.com/downloads)
 * [FFmpeg](https://ffmpeg.org/download.html)
 
+## HEROKU
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Arus-Bots/Mizuhara/)
 
 ## Clone this project
 ```bash
