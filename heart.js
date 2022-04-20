@@ -70,11 +70,11 @@ async function startArus() {
     })
 
    arus.ev.on('group-participants.update', async (grp) => {
-        console.log(grp)
-let wel=gp.get(`${m.chat}.welc`)
+let wel=gp.get(`${grp.id}.welc`)
 let wlc=(wel)?wel:[]
-if(wlc.includes(grp.id)){
+
         try {
+            
             let metadata = await arus.groupMetadata(grp.id)
             let participants = grp.participants
             let mem = grp.participants[0]
@@ -96,7 +96,8 @@ if(wlc.includes(grp.id)){
 
                 if (grp.action == 'add'&& mem.includes(arus.user.jid)) {
                     const des=`
-🎗️ *Welcome to*  *${metadata.subject}*🎗️  
+}
+🎗️ *hue hue Welcome to*  *${metadata.subject}* 🎗️  
 
 *@${num.split('@')[0]}*
         
@@ -104,14 +105,15 @@ if(wlc.includes(grp.id)){
         
 ${metadata.desc}                    
                     `
-                    arus.sendMessage(grp.id, { image: { url: ppgroup }, contextInfo: { mentionedJid: [num] }, caption: des })
+                    arus.sendMessage(grp.id, { video: { url: "https://c.tenor.com/tmcZ4TIVSrMAAAPo/welcome.mp4" }, gifPlayback:true,thumbnail:await getBuffer(ppgroup) ,contextInfo: { mentionedJid: [num] }, caption: des })
                 } 
 
-
+if(wlc.includes(`${grp.id}`)){
+ console.log(grp)
                 
 if (grp.action == 'add'&& !mem.includes(arus.user.jid)) {
                     const des=`
-🎗️*Welcome to*  *${metadata.subject}*🎗️  
+🎗️ *Welcome to*  *${metadata.subject}* 🎗️  
 
 *@${num.split('@')[0]}*
         
@@ -119,16 +121,16 @@ if (grp.action == 'add'&& !mem.includes(arus.user.jid)) {
         
 ${metadata.desc}                     
                     `
-                    arus.sendMessage(grp.id, { image: { url: ppgroup }, contextInfo: { mentionedJid: [num] }, caption: des })
+                    arus.sendMessage(grp.id, { video: { url: "https://c.tenor.com/tmcZ4TIVSrMAAAPo/welcome.mp4" }, gifPlayback:true,thumbnailUrl:await getBuffer(ppgroup) ,contextInfo: { mentionedJid: [num] }, caption: des })
                 }                     
          if (grp.action == 'remove') {
                     arus.sendMessage(grp.id, { image: { url: ppuser }, contextInfo: { mentionedJid: [num] }, caption: `@${num.split("@")[0]} Leaving from ${metadata.subject}` })
                 }
             }
-        } catch (err) {
+        } }catch (err) {
             console.log(err)
         }
-    }
+    
     })
 	
     // Setting

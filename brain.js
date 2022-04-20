@@ -13,12 +13,18 @@ const speed = require('performance-now')
 const { performance } = require('perf_hooks')
 const { Primbon } = require('scrape-primbon')
 const primbon = new Primbon()
-const { smsg, formatp,  formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom } = require('./lib/myfunc')
+const { smsg, formatp,  formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention,GIFBufferToVideoBuffer, getRandom } = require('./lib/myfunc')
 const yts= require("yt-search")
 global.db = require('quick.db')
 global.tb = new db.table('exp')
 global.gp= new db.table('grp')
 const canvacord=require('canvacord')
+const msgFilter= require('./lib/msgFilter.js')
+    const { Chalk } = require("cfonts/lib/Chalk")
+const { Doujin } = require("@shineiichijo/nhentai-pdf")
+const { tmpdir } =require("os");
+const { readFile } =require ("fs/promises")
+const nHentai =require("shentai")
 module.exports = arus = async (arus, m, chatUpdate, store) => {
     try {
         var body = (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
@@ -34,8 +40,8 @@ module.exports = arus = async (arus, m, chatUpdate, store) => {
         const text = q = args.join(" ")
         const quoted = m.quoted ? m.quoted : m
         const mime = (quoted.msg || quoted).mimetype || ''
-	    const isMedia = /image|video|sticker|audio/.test(mime)
-	
+        const isMedia = /image|video|sticker|audio/.test(mime)
+    
         // Group
         const isGroup=  m.chat.endsWith("@g.us");
         const groupMetadata = m.isGroup ? await arus.groupMetadata(m.chat).catch(e => {}) : ''
@@ -44,14 +50,20 @@ module.exports = arus = async (arus, m, chatUpdate, store) => {
         const participants = m.isGroup ? await groupMetadata.participants : ''
         const groupAdmins = m.isGroup ? await participants.filter(v => v.admin !== null).map(v => v.id) : ''
         const groupOwner = m.isGroup ? groupMetadata.owner : ''
-    	const isBotAdmins = m.isGroup ? groupAdmins.includes(botNumber) : false
-    	const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
+        const isBotAdmins = m.isGroup ? groupAdmins.includes(botNumber) : false
+        const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
     const time = moment.tz('Asia/Kolkata').format('DD/MM HH:mm:ss')
+    const mentionByTag = m.mtype == "extendedTextMessage" && m.message.extendedTextMessage.contextInfo != null ? m.message.extendedTextMessage.contextInfo.mentionedJid : []
+       const mentionByReply = m.mtype == "extendedTextMessage" && m.message.extendedTextMessage.contextInfo != null ? m.message.extendedTextMessage.contextInfo.participant || "" : ""
         //db fetch
     let _exp = tb.get(`${m.sender}.exp`)
     let _items = tb.get(`${m.sender}.items`)
     let anti=gp.get(`${m.chat}.link`)
    global.wel=gp.get(`${m.chat}.welc`)
+   let _bank=tb.get(`${m.sender}.bank`)
+   let _casino= gp.get(`${m.chat}.casino`)
+   let _haigusha=tb.get(`${m.sender}.haigusha`)
+   const suu=tb.get(`${m.chat}.hp`)
 //db validation
 let _anti= (anti)? anti : []
 global._wel= (wel)?wel:[]
@@ -60,12 +72,17 @@ let expa = (_exp) ? _exp : 0
 _exp = tb.get(`${m.sender}.exp`)
  expa = (_exp) ? _exp : 0
 exps = tb.get(`${m.sender}.exp`)
-
+let casino=(_casino) ? _casino : []
+let haigusha=(_haigusha) ? _haigusha : []
+const _suu= (suu)?suu : []
 //Exp
 let charm = (items.includes('Exp Charm 💫️')) ? 2 : 1
     let rx = charm*Math.floor(Math.random() * 20) + 5
     const addxp = (expa) ? expa+rx : rx
-    tb.set(`${m.sender}.exp`, addxp)  
+    tb.set(`${m.sender}.exp`, addxp)
+
+ 
+  
 
      function expc(exps) {
 
@@ -138,6 +155,17 @@ let charm = (items.includes('Exp Charm 💫️')) ? 2 : 1
             var maxExp = 10000000
                 }
         return { role: role, maxE : maxExp }
+}
+function lz(val) {
+  try {
+    let expa = (val.data.us['exp']) ? val.data.us['exp'] : 0
+    return true
+  } catch(err) {
+    //console.log('[ERR]', val)
+    return false
+    //console.log(val.data, val.id)
+}
+
 }    
     if (isGroup && _anti.includes(`${m.chat}`)) {
       if (budy.includes("://chat.whatsapp.com/")) {
@@ -146,13 +174,15 @@ let charm = (items.includes('Exp Charm 💫️')) ? 2 : 1
         await arus.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
     }
     }
+     
+   
+
         // Push Message To Console && Auto Read
         if (m.message) {
             arus.sendReadReceipt(m.chat, m.sender, [m.key.id])
             console.log(chalk.black(chalk.bgWhite('[ ICHIKA ]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('=> FROM'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('=> MSG'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
         }
-	
-
+    
 
         switch(command) {
 case 'hi':
@@ -169,7 +199,7 @@ case '':
 let buttonMessaged = {
         image: {url:"https://telegra.ph/file/645707c1698c8a9515953.jpg"},
         caption: `*DID YOU MEAN =help ?*`,
-        footer: '©MIZUHARA~ARUS',
+        footer: '©Arus 2022',
         buttons: dbut,
         headerType: 4
     }
@@ -180,100 +210,375 @@ let buttonMessaged = {
       
 
 case 'help':
-const hlp=
-` *U^I^U ♡ Konichiwa ${pushname} Senpai, I'm Mizuhara*
-
-🎋 \`\`\`Here are my listed commands, Have fun in using them:-\`\`\`
-
-🈸 *GENERAL* 🈸
-
-\`\`\`🎯 profile
-
-🎯 rank
-
-🎯 exp
-
-🎯 delete
-
-🎯 help
-
-🎯 creator
-
-🎯 mods
-
-🎯 info\`\`\`
-  
-⛩️ *ANIME* ⛩️
-
-\`\`\`🎯 neko
-
-🎯 waifu
-
-🎯 holo
-
-🎯 fox_girl
-
-🎯 kemonomimi
-
-🎯 anime
-
-🎯 manga
-
-🎯 wallpaper\`\`\`
-
-❄️ *GROUP COMMANDS* ❄️
-
-\`\`\`🎯 ping
-
-🎯 add
-
-🎯 kick
-
-🎯 promote
-
-🎯 demote
-
-🎯 group open
-
-🎯 group close
-
-🎯 linkgc
-
-🎯 setgpfp
-
-🎯 enable/disable
-    🍂 antilink
-    🍂 events\`\`\`
-
-🍁 *UTILS* 🍁
-
-\`\`\`🎯 sticker
-
-🎯 toimg
-
-🎯 togif
-
-🎯 tourl\`\`\`
-
-🏷️ *MEDIA* 🏷️
-
-\`\`\`🎯 yts
-
-🎯 ytv
-
-🎯 yta
-
-🎯 play
-
-🎯 google
-
-🎯 image\`\`\`
+if(!args.length>0){
+const hlp=`
+*Konichiwa 👋 ${pushname} Senpai*
+\`\`\`Ｉ'ｍ  Ｍｉｚｕｈａｒａ\`\`\` ( ❤️ω❤️ )
 
 
- 🍁 *©Powered by Arus* 🍁`
-           arus.sendMessage(m.chat,{video:fs.readFileSync('./src/help.mp4'),gifPlayback:true,caption:hlp},{quoted:m})
+*Basic Rules :-*
+📌 | Don't call Bot or else you'll get permanently ban
+📌 | Don't spam bot or else you'll be temporary ban
+
+ ➡️ | Use =faq for more information
+
+🔮 1. ᏀᎬΝᎬᎡᎪᏞ ᎷᎬΝႮ
+💎 *Description:* Use this if you want to see General Command List
+♦️ *Usage:* =help 1
+
+🔮 2. ᎷᎬᎠᏆᎪ ᎷᎬΝႮ
+💎 *Description:* Use this if you want to see Media Command List
+♦️ *Usage:* =help 2
+
+🔮 3. ᎪΝᏆᎷᎬ ᎷᎬΝႮ
+💎 *Description:* Use this if you want to see Anime Command List
+♦️ *Usage:* =help 3
+
+🔮 4. ᏀᎡϴႮᏢ ᎷᎬΝႮ
+💎 *Description:* Use this if you want to see Group Command List
+♦️ *Usage:* =help 4
+
+🔮 5. ᏀᎪᎷᎬՏ ᎷᎬΝႮ
+💎 *Description:* Use this if you want to see Games Command List
+♦️ *Usage:* =help 5
+
+🔮 6. ႮͲᏆᏞՏ ᎷᎬΝႮ
+💎 *Description:* Use this if you want to see Utils Menu
+♦️ *Usage:* =help 6
+
+🏮 *_New commands will be added as per upcoming future updates_* 🏮
+
+© Powered By Arus`
+  const hhbut = [
+{buttonId: '=info', buttonText: {displayText: '📤 Info'}, type: 1},
+{buttonId: '=help 1', buttonText: {displayText: '🧧 Help 1'}, type: 1}
+]
+let hbutto = {
+        image: {url:"https://telegra.ph/file/9e58cb8f7cb23d7e7f94d.jpg"},
+        caption: hlp,
+        footer: '©Arus 2022',
+        buttons: hhbut,
+        headerType: 4
+    }
+arus.sendMessage(m.chat,hbutto,{quoted:m})
+}
+           //arus.sendMessage(m.chat,{video:fs.readFileSync('./src/help.mp4'),gifPlayback:true,caption:hlp},{quoted:m})
+if(args[0] == "1"){
+let hlp2=`
+|I{•------» GENERAL MENU «------•}I|
+
+⚜️ Command: Profile
+💎 Usage: =profile
+📕 Description: Display Users Profile 📜
+
+⚜️ Command: Rank
+💎 Usage: =rank
+📕 Description: Displays Users Rank 🥇
+
+⚜️ Command: Exp
+💎 Usage: =exp
+📕 Description: Displays Users Experience 🎖️
+
+⚜️ Command: Delete
+💎 Usage: =delete [tag bot message which you want to delete]
+📕 Description: Delete the messages which is sent by bot 🟥
+
+⚜️ Command: Creator
+💎 Usage: =creator
+📕 Description: Displays creator contact number 🪀
+
+⚜️ Command: Mods
+💎 Usage: =mods
+📕 Description: Display moderators list 📄
+
+⚜️ Command: Information
+💎 Usage: =info
+📕 Description: Get information about Mizuhara Bot 🤖
+
+
+© Powered By Arus`
+ const hhbut = [
+{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
+{buttonId: '=help 2', buttonText: {displayText: '🧧 Help 2'}, type: 1}
+]
+let hbutto = {
+        image: {url:"https://telegra.ph/file/4f3cf3cc03896a1a73f58.jpg"},
+        caption: hlp2,
+        footer: '©Arus 2022',
+        buttons: hhbut,
+        headerType: 4
+    }
+arus.sendMessage(m.chat,hbutto,{quoted:m})
+}
+if(args[0] == "2"){
+let hlp2=`
+*|I{•------» Media Menu «------•}I|*
+
+⚜️ *Command:* YouTube Search
+💎 *Usage:* =yts [query]
+📕 *Description:* Searches Requested Topics on YouTube 🔍
+
+⚜️ *Command:* YouTube Audio
+💎 *Usage:* =yta [link]
+📕 *Description:* Downloads youtube audio from video ⬇️
+
+⚜️ *Command:* YouTube Video
+💎 *Usage:* =ytv [link]
+📕 *Description:* Download youtube videos ⬇️
+
+⚜️ *Command:* Play
+💎 *Usage:* =play [query]
+📕 *Description:* Play your requested song ▶️
+
+⚜️ *Command:* Google Searches
+💎 *Usage:* =google [query]
+📕 *Description:* Searches on the web 🔍
+
+⚜️ *Command:* Images
+💎 *Usage:* =images [query]
+📕 *Description:* Provides you images 
+
+⚜️ *Command:* Wallpaper
+💎 *Usage:* =wallpaper [query]
+📕 *Description:* Provides you wallpaper 
+
+© Powered By Arus
+`
+ const hhbut = [
+{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
+{buttonId: '=help 3', buttonText: {displayText: '🧧 Help 3'}, type: 1}
+]
+let hbutto = {
+        image: {url:"https://telegra.ph/file/f7a1f49f02b62b652a760.jpg"},
+        caption: hlp2,
+        footer: '©Arus 2022',
+        buttons: hhbut,
+        headerType: 4
+    }
+arus.sendMessage(m.chat,hbutto,{quoted:m})
+}
+if(args[0] == "3"){
+let hlp2=`
+*|I{•------» Anime Menu «------•}I|*
+
+⚜️ *Command:* Waifu
+💎 *Usage:* =waifu
+📕 *Description:* Gives you random waifu images
+
+⚜️ *Command:* Neko
+💎 *Usage:* =neko
+📕 *Description:* Gives you random neko images
+
+⚜️ *Command:* Fox Girl Waifus
+💎 *Usage:* =fox_girl
+📕 *Description:* Gives you random fox_girl images
+
+⚜️ *Command:* Kemonomiomi
+💎 *Usage:* =kemonomiomi
+📕 *Description:* Gives you random kemonomiomi images
+
+⚜️ *Command:* Anime
+💎 *Usage:* =anime [Name]
+📕 *Description:* Gives you information about requested anime
+
+⚜️ *Command:* Manga
+💎 *Usage:* =manga [Name]
+📕 *Description:* Gives you detail about requested manga
+
+© Powered By Arus`
+ const hhbut = [
+{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
+{buttonId: '=help 4', buttonText: {displayText: '🧧 Help 4'}, type: 1}
+]
+let hbutto = {
+        image: {url:"https://telegra.ph/file/e08646ace7e9a9da248da.jpg"},
+        caption: hlp2,
+        footer: '©Arus 2022',
+        buttons: hhbut,
+        headerType: 4
+    }
+arus.sendMessage(m.chat,hbutto,{quoted:m})
+}
+if(args[0] == "4"){
+let hlp2=`
+*|I{•------» GROUP MENU «------•}I|*
+
+⚜️ *Command:* Ping
+💎 *Usage:* =ping [Text/Your message]
+📕 *Description:* Tags all one in group with your message 💫
+
+⚜️ *Command:* Add
+💎 *Usage:* =add 9168327XXXXX
+📕 *Description:* Add Participants 
+
+⚜️ *Command:* Kick
+💎 *Usage:* =kick @taguser
+📕 *Description:* Kick members from group
+
+⚜️ *Command:* Promote
+💎 *Usage:* =promote @taguser
+📕 *Description:* Promotes user
+
+⚜️ *Command:* Demote
+💎 *Usage:* =demote @taguser
+📕 *Description:* Demotes user ⛔
+
+⚜️ *Command:* Group Open
+💎 *Usage:* =group open
+📕 *Description:* Change group settings to all participants
+
+⚜️ *Command:* Group Close
+💎 *Usage:* =group close
+📕 *Description:* Change group settings to only admins
+
+⚜️ *Command:* Group Link
+💎 *Usage:* =linkgc
+📕 *Description:* Gives you group link
+
+⚜️ *Command:* Change Group Profile Pic
+💎 *Usage:* =setgpfp [reply images/caption]
+📕 *Description:* Changes group profile pic
+
+⚜️ *Command:* Enable
+💎 *Usage:* =enable [option]
+♦️ *Option:* Antilink
+                       Event
+📕 *AntiLink-Description:* Kicks the participants who sends group link
+📕 *Events-Description:* Welcomes when participant join the group
+
+⚜️ *Command:* Disable
+💎 *Usage:* =disable [option]
+♦️ *Option:* Antilink
+                       Event
+                       📕 *AntiLink-Description:* Deactivate kick to the participants who sends group link
+                       📕 *Events-Description:*  Deactivates welcome when participant join the group
+
+© Powered By Arus
+`
+ const hhbut = [
+{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
+{buttonId: '=help 5', buttonText: {displayText: '🧧 Help 5'}, type: 1}
+]
+let hbutto = {
+        image: {url:"https://telegra.ph/file/f7a1f49f02b62b652a760.jpg"},
+        caption: hlp2,
+        footer: '©Arus 2022',
+        buttons: hhbut,
+        headerType: 4
+    }
+arus.sendMessage(m.chat,hbutto,{quoted:m})
+}
+if(args[0] == "5"){
+let hlp2=`
+*|I{•------» Games Menu «------•}I|*
+
+​    >>>>>>> *ECONOMY* <<<<<<<
+
+⚜️ *Command:* Wallet
+💎 *Usage:* =wallet
+📕 *Description:* Displays your money in a wallet
+
+⚜️ *Command:* Give/Transfer Money
+💎 *Usage:* =give @user [Amount]
+📕 *Description:* Transfer Money 
+
+⚜️ *Command:* Daily
+💎 *Usage:* =daily
+📕 *Description:* Claims your daily money
+
+⚜️ *Command:* Rob
+💎 *Usage:* =rob @taguser
+📕 *Description:* Rob the person 
+
+⚜️ *Command:* Bank
+💎 *Usage:* =bank
+📕 *Description:* Displays your total amount in Bank
+
+⚜️ *Command:* Deposit
+💎 *Usage:* =deposit [Amount
+📕 *Description:* Deposit your money into bank from wallet
+
+⚜️ *Command:* Gamble
+💎 *Usage:* =gamble [Amount] [Left/Right]
+📕 *Description:* Gamble your money and get the chances to win x2 of your gambled money
+
+© Powered By Arus`
+ const hhbut = [
+{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
+{buttonId: '=help 6', buttonText: {displayText: '🧧 Help 6'}, type: 1}
+]
+let hbutto = {
+        image: {url:"https://telegra.ph/file/01aeb7961d754e4c27323.jpg"},
+        caption: hlp2,
+        footer: '©Arus 2022',
+        buttons: hhbut,
+        headerType: 4
+    }
+arus.sendMessage(m.chat,hbutto,{quoted:m})
+}
+if(args[0] == "6"){
+let hlp2=`
+*|I{•------» Utils Menu «------•}I|*
+ 
+⚜️ *Command:* Sticker
+💎 *Usage:* =sticker [caption/reply]
+📕 *Description:* Converts Img/Gifs in sticker
+
+⚜️ *Command:* To Image
+💎 *Usage:* =toimg [reply]
+📕 *Description:* Converts Stickers To Images
+
+⚜️ *Command:* To Gif
+💎 *Usage:* =togif [reply]
+📕 *Description:* Converts Video Stickers to Gif
+
+⚜️ *Command:* To URL
+💎 *Usage:* =tourl [caption/reply]
+📕 *Description:* Convert your img/videos/gif to link 
+
+© Powered By Arus`
+ const hhbut = [
+{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
+{buttonId: '=help 1', buttonText: {displayText: '🧧 Help 1'}, type: 1}
+]
+let hbutto = {
+        image: {url:"https://telegra.ph/file/d4aa25dd70b1e10daaeea.jpg"},
+        caption: hlp2,
+        footer: '©Arus 2022',
+        buttons: hhbut,
+        headerType: 4
+    }
+arus.sendMessage(m.chat,hbutto,{quoted:m})
+}
 break
+    case'lead':
+    case'leaderboard':
+  
+    const a = tb.all()
+  const all = a.filter(o => lz(o))
+//  console.log(all)
+  const srt = all.sort((x, y) => y.data.us['exp'] - x.data.us['exp'])
+  //console.log(srt)
+  const noa = (srt.length < 10) ? srt.length : 10
+    
+  let lb = '♕ *GLOBAL LEADERBOARD* ♕\n\n'
+  for (let i = 0; i < noa; i++) {
+   // let dt = await client.getContactById(`${srt[i].ID}.us`)
+    //console.log(dt)
+        
+    //let pm = (srt[i].data.us.pokedex) ? srt[i].data.us.pokedex.length : 0
+    let un = (srt[i].ID.pushname) ? srt[i].ID.pushname : 'User'
+    lb += `*#${i+1}*\n🎖️ *Rank:* ${expc(srt[i].data.us['exp']).role}\n📠 *Exp:* ${srt[i].data.us['exp']}\n🪙 *Gold:* ${srt[i].data.us.gold}\n🎯️ *Tag:* ${srt[i].ID.substring(7, 11)}\n\n`
 
+    }
+    m.reply(lb)
+
+break
+case 'te':
+ const au = tb.all()
+ const counu=au.ID.length
+ console.log(au)
+break
 case 'info':
 
 const ibut = [
@@ -282,26 +587,20 @@ const ibut = [
 {buttonId: '=mods', buttonText: {displayText: '💥 Arus Team'}, type: 1}
 ]
 const inf=`❁ ════ ❃•💙 *MIZUHARA* 💙•❃ ════ ❁
-
 \`\`\`A FULL FLEDGED MULTI DEVICE WHATSAPP BOT WITH COOL FEATURES\`\`\`
-
 ❁ ═══ ❃•📕 *INFORMATION*📕•❃ ═══ ❁
 \`\`\`A simple and easy-to-use WhatsApp bot project based on Multi-Device Baileys and written in JavaScript\`\`\`
-
 ❁ ══════ ❃•📄 *NOTE* 📄•❃ ══════ ❁
 \`\`\`This bot is a free open source project by THE TEAM ARUS\`\`\`
-
 ❁ ═════ ❃•📑 *GITHUB* 📑•❃ ═════ ❁
 *_LINK:- https://github.com/Arus-Bots/Mizuhara_*
-
-
 ❁ ═══ ❃•✍🏻 *CONTRIBUTE* ✍🏻•❃ ═══ ❁
 \`\`\`Feel free to open issues regarding any problems or if you have any feature feel free to contact owner by typing =owner or =mods\`\`\` 
 `
 let buttonMessagei = {
         image: { url: "https://telegra.ph/file/05a5910097d3dd9743ebb.jpg" },
         caption: inf,
-        footer: '©MIZUHARA~ARUS',
+        footer: '©Arus 2022',
         buttons: ibut,
         headerType: 4
     }
@@ -311,32 +610,24 @@ break
 
 case 'mods':
 const mod=`❁ ════ ❃• *MODERATORS* •❃ ════ ❁
-
 #1
 💥 *Username: Pratyush*
 🍁 *Contact: https://wa.me/+918231033230*
-
 #2
 💥 *Username: AiZen*
 🍂 *Contact: https://wa.me/+918709022955*
-
 #3
 💥 *Username: Tomioka*
 🍁 *Contact: https://wa.me/+917003213983*
-
 #4
 💥 *Username: Death*
 🍁 *Contact: https://wa.me/+917604016334*
-
 #5
 💥 *Username: Arin*
 🍁 *Contact: https://wa.me/+919330880626*
-
 #6
 💥 *Username: Manish*
 🍁 *Contact: https://wa.me/+919106196230*
-
-
 ━━━━°❀•°:🤍 *MIZUHARA* 🤍:°•❀°━━━━`
 const mbut = [
 {buttonId: '=creator', buttonText: {displayText: '🎋 Creator'}, type: 1},
@@ -346,7 +637,7 @@ const mbut = [
 let buttonMessagem = {
         image: { url: "https://telegra.ph/file/05a5910097d3dd9743ebb.jpg" },
         caption: mod,
-        footer: '©MIZUHARA~ARUS',
+        footer: '©Arus 2022',
         buttons: mbut,
         headerType: 4
     }
@@ -364,10 +655,10 @@ case 'exp':
   const rdataa = expc(exps)
   var maxExp = rdataa.maxE
   m.reply(`🏷️ _*USERNAME 🏷️ :*_ ${pushname}
-
 🧮 _*EXP 🧮 :*_ ${exps}/${maxExp}`)
 break
-  case'rank':
+
+case'rank':
                                 
 
         if(m.isGroup){
@@ -409,11 +700,7 @@ bgp=await getBuffer('https://www.wallpapermaiden.com/wallpaper/36472/download/19
   rank.build().then(async(data)=>{
    // const rjpg=await getBuffer(data)
 const rcpt=`*🍁 ${pushname}\'s rank 🍁*
-
-
 *🔖 Rank: ${exps}/${maxExp}*
-
-
 *🧮 Role: ${rdata.role}*
 `
 arus.sendMessage(m.chat,{image:data,caption:rcpt},{quoted:m})
@@ -421,56 +708,13 @@ arus.sendMessage(m.chat,{image:data,caption:rcpt},{quoted:m})
 
 }
 break
-case 'profile':
- const o = tb.get(`${m.sender}.exp`)
-var exps = (o) ? o : 0
-const rdata = expc(exps)
-var maxExp = rdata.maxE
-const bio= await arus.fetchStatus(m.sender)
-console.log(bio)
-const adn= isAdmins? "True":"False"
-try {
-        
-    pfp=await arus.profilePictureUrl(m.sender, 'image')
-
-      } catch (e) {
- 
-  pfp ='https://steamuserimages-a.akamaihd.net/ugc/954087817129084207/5B7E46EE484181A676C02DFCAD48ECB1C74BC423/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-}
- const   profile = `
-🏷️ _*USERNAME 🏷️ :*_ ${pushname}
-
-
-💥 _*BIO 💥 :*_ ${bio.status}
-
-
-🧧 _*GROUP 🧧 :*_ ${groupName}
-
-
-♠️ _*ADMIN ♠️ :*_ ${adn}
-
-
-🧮 _*EXP 🧮 :*_ ${exps}/${maxExp}
-
-
-🎗️ _*ROLE 🎗️ :*_ ${rdata.role}
-` 
-const buttonsd = [
-{buttonId: '=rank', buttonText: {displayText: '🎋 Rank'}, type: 1},
-{buttonId: '=help', buttonText: {displayText: '🍂 Help'}, type: 1}
-]
-let buttonMessage = {
-        image: { url: pfp },
-        caption: profile,
-        footer: '©MIZUHARA~ARUS',
-        buttons: buttonsd,
-        headerType: 4
-    }
-arus.sendMessage(m.chat,buttonMessage,{quoted:m})
-break
 
 
 //////////////////////////UTILS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+ 
+    
 case  'sticker': case 's': case 'stickergif': case 'sgif':
  {
     if (!quoted) m.reply(`*Tag/Reply a image/video*`)
@@ -490,6 +734,54 @@ case  'sticker': case 's': case 'stickergif': case 'sgif':
         }
     }
     break
+    case 'profile':
+ const o = tb.get(`${m.sender}.exp`)
+var exps = (o) ? o : 0
+const rdata = expc(exps)
+var maxExp = rdata.maxE
+var bio= await arus.fetchStatus(m.sender)
+var bioo = bio.status
+const s = tb.get(`${m.sender}.haigusha`)
+  var SO = (s) ? s : 'None'
+//console.log(bio)
+const adn= isAdmins? "True":"False"
+try {
+        
+    pfp=await arus.profilePictureUrl(m.sender, 'image')
+
+      } catch (e) {
+ 
+  pfp ='https://steamuserimages-a.akamaihd.net/ugc/954087817129084207/5B7E46EE484181A676C02DFCAD48ECB1C74BC423/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
+}
+ const   profile = `
+🏷️ _*USERNAME 🏷️ :*_ ${pushname}
+
+💥 _*BIO 💥 :*_ ${bioo}
+
+🧧 _*GROUP 🧧 :*_ ${groupName}
+
+♠️ _*ADMIN ♠️ :*_ ${adn}
+
+🧮 _*EXP 🧮 :*_ ${exps}/${maxExp}
+
+🎗️ _*ROLE 🎗️ :*_ ${rdata.role}
+
+🎋 _*HAIGUSHA 🎋 :*_ ${SO}
+` 
+const buttonsd = [
+{buttonId: '=rank', buttonText: {displayText: '🎋 Rank'}, type: 1},
+{buttonId: '=help', buttonText: {displayText: '🍂 Help'}, type: 1}
+]
+let buttonMessage = {
+        image: { url: pfp },
+        caption: profile,
+        footer: '©Arus 2022',
+        buttons: buttonsd,
+        headerType: 4
+    }
+arus.sendMessage(m.chat,buttonMessage,{quoted:m})
+break
+
 case  'take':
  {
     if (!quoted) m.reply(`*Tag/Reply a image/video*`)
@@ -671,7 +963,13 @@ case 'linkgroup': case 'linkgc': {
                                        if (_wel.includes(`${m.chat}`)) return m.reply("Activated!!");
                                       gp.set(`${m.chat}.welc`,wel+`${m.chat}`)
                                       m.reply("Yeah I am ready to welcome new members...")
-                                  } else{
+                                  }
+                                      else if(args[0] == 'casino'){
+                                        if(casino.includes(`${m.chat}`)) return m.reply("Already activated!!")
+                                         gp.set(`${m.chat}.casino`,_casino+`${m.chat}`)  
+                                         m.reply("Casino has been activated.") 
+                                      }
+                                   else{
                                         m.reply("No such options")
                                       } 
 
@@ -686,15 +984,19 @@ m.reply("Successfully deactivated antilink!");
  }if (args[0] == "events") {
 gp.delete(`${m.chat}.welc`,`${m.chat}`)
 m.reply("Successfully deactivated events!");  
+ }
+ if (args[0] == "casino") {
+gp.delete(`${m.chat}.casino`,`${m.chat}`)
+m.reply("Successfully deactivated casino!");  
  }else{
     m.reply("No such options")
  }
 break
 //////////////////////////YOUTUBE\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 case  'play': case 'ytplay': {
-    if (!text) m.reply(`Example : ${prefix + command} story wa anime`)
+    if (!q) m.reply(`Example : ${prefix + command} story wa anime`)
     let yts = require("yt-search")
-    let search = await yts(text)
+    let search = await yts(q)
     let anu = search.videos[Math.floor(Math.random() * search.videos.length)]
     let buttons = [
         {buttonId: `=ytmp3 ${anu.url}`, buttonText: {displayText: '♫ Audio'}, type: 1},
@@ -712,7 +1014,7 @@ case  'play': case 'ytplay': {
 📓 Channel : ${anu.author.url}
 🎬 Description : ${anu.description}
 🌐 Url : ${anu.url}`,
-        footer: '©MIZUHARA~Arus',
+        footer: '©Arus 2022',
         buttons: buttons,
         headerType: 4
     }
@@ -721,14 +1023,14 @@ case  'play': case 'ytplay': {
 break
 case 'ytmp3': case 'ytaudio': case 'yta': {
     let { yta  } = require('./lib/y2mate')
-    if (!text) m.reply(`*Where is the yt-link dude?*`)
+    if (!q) m.reply(`*Where is the yt-link dude?*`)
    
-    var search = await yts(text)
+    var search = await yts(q)
     //console.log(search)
     // anu = search.videos[Math.floor(Math.random() * search.videos.length)]
     search=search.all
     let quality = args[1] ? args[1] : '128kbps'
-    let media = await yta(text, quality)
+    let media = await yta(q, quality)
     if (media.filesize >= 100000) return m.reply('Oops too big '+util.format(media))
     const ycp=`*🎬YOUTUBE MUSIC🎬*
           
@@ -739,7 +1041,7 @@ case 'ytmp3': case 'ytaudio': case 'yta': {
 *📓Title* : ${search[0].title}
 *🎤Type* : MP3
 *🎬Description* : ${search[0].description}
-*🌐Link* : ${text}`
+*🌐Link* : ${q}`
 arus.sendMessage(m.chat,{image:{url:search[0].thumbnail},caption:ycp},{quoted:m,})
 arus.sendMessage(m.chat, { audio: { url: media.dl_link }, contextInfo: {
                     externalAdReply: {
@@ -754,18 +1056,18 @@ arus.sendMessage(m.chat, { audio: { url: media.dl_link }, contextInfo: {
 break
 case 'ytmp4': case 'ytvideo': case 'ytv': {
     let { ytv } = require('./lib/y2mate')
-    if (!text) m.reply(`*Where is the yt-link dude?*`)
+    if (!q) m.reply(`*Where is the yt-link dude?*`)
     let quality = args[1] ? args[1] : '360p'
-    let media = await ytv(text, quality)
+    let media = await ytv(q, quality)
     if (media.filesize >= 100000) return m.reply('Oops!!'+util.format(media))
 
 arus.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `🎯 Title : ${media.title}\n🎗️ File Size : ${media.filesizeF}\n📓 Url : ${isUrl(text)}\n📌 Ext : MP3\n🏷️ Resolution : ${args[1] || '360p'}` }, { quoted: m })
 }
 break
 case 'yts': case 'ytsearch': {
-    if (!text) m.reply(`Example : ${prefix + command} story wa anime`)
+    if (!q) m.reply(`Example : ${prefix + command} story wa anime`)
     let yts = require("yt-search")
-    let search = await yts(text)
+    let search = await yts(q)
     let teks = 'YouTube Search\n\n Result From '+text+'\n\n'
     let no = 1
     for (let i of search.all) {
@@ -773,6 +1075,63 @@ case 'yts': case 'ytsearch': {
     }
     arus.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },jpegThumbnail:fs.readFileSync('./src/yts.jpg'),  caption: teks, }, { quoted: m, })
 }
+break
+case 'join': {
+                if (!isCreator) throw mess.owner
+                if (!text) throw 'Enter the group link!'
+                if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) throw 'Link Invalid!'
+                m.reply(mess.wait)
+                let result = args[0].split('https://chat.whatsapp.com/')[1]
+                await arus.groupAcceptInvite(result).then((res) => m.reply(jsonformat(res))).catch((err) =>m.reply(jsonformat(err)))
+            }
+            break
+            case 'leave': {
+                if (!isCreator) throw mess.owner
+                await arus.groupLeave(m.chat).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+            }
+            break
+     case 'instagram': case 'ig': case 'igdl': {
+                if (!q) return m.reply('Enter Query Url!')
+                m.reply(mess.wait)
+                if (/(?:\/p\/|\/reel\/|\/tv\/)([^\s&]+)/.test(isUrl(q)[0])) {
+                    let anu = await fetchJson(api('zenz', '/downloader/instagram2', { url: isUrl(q)[0] }, 'apikey'))
+                    for (let media of anu.data) arus.sendMedia(m.chat, media, '', `Download Url Instagram From ${isUrl(q)[0]}`, m)
+                } else if (/\/stories\/([^\s&]+)/.test(isUrl(q)[0])) {
+                    let anu = await fetchJson(api('zenz', '/downloader/instastory', { url: isUrl(q)[0] }, 'apikey'))
+                    arus.sendMedia(m.chat, anu.media[0].url, '', `Download Url Instagram From ${isUrl(q)[0]}`, m)
+                }
+            }
+            break
+
+case 'lyrics':
+  const Genius =require("genius-lyrics")
+const Client = new Genius.Client();
+  const searches = await Client.songs.search(q);
+
+  // Pick first one
+  const firstSong = searches[0];
+  console.log("About the Song:\n", firstSong, "\n");
+  
+  // Ok lets get the lyrics
+  const lyrics = await firstSong.lyrics();
+  console.log("Lyrics of the Song:\n", lyrics, "\n");
+  const reactionMessage = {
+    react: {
+        text: "🎶",
+        key:m.key
+    }
+}
+
+ await arus.sendMessage(m.chat, reactionMessage)
+  arus.sendMessage(m.chat, { text:lyrics, contextInfo: {
+    externalAdReply: {
+        title:'Lyrics-',
+        body:firstSong.title,
+        thumbnail: await getBuffer(firstSong.thumbnail),
+        //mediaUrl: media.url
+    }
+}}, { quoted: m})
+
 break
 case 'gimage':case 'image': {
         if (!text) m.reply(`Baka!! what image you wnt?`)
@@ -788,7 +1147,7 @@ case 'gimage':case 'image': {
                     caption: `
 💥 *Query* : ${text}
 `,
-                    footer: '©MIZUHARA~Arus',
+                    footer: '©Arus 2022',
                     buttons: buttons,
                     headerType: 4
                 }
@@ -819,9 +1178,9 @@ case 'gimage':case 'image': {
         {buttonId: `${prefix}neko`, buttonText: {displayText: `🐱Neko`}, type: 1},
         ]
       let buttonsMessage = {
-       image: {url:waifud.data.url},
+       image: await getBuffer(waifud.data.url),
        caption:  `*Here is your waifu*`,
-      footer: '©MIZUHARA~Arus',
+      footer: '©Arus 2022',
       buttons: wbutss,
       headerType: 4
       }
@@ -829,6 +1188,16 @@ case 'gimage':case 'image': {
                     return('error..')
                 })
                 break  
+ case 'couplepp': case 'ppcouple': {
+                //replay(mess.wait)
+                let anu = await fetchJson('https://raw.githubusercontent.com/iamriz7/kopel_/main/kopel.json')
+                let random = anu[Math.floor(Math.random() * anu.length)]
+                arus.sendMessage(m.chat, { image: { url: random.male }, caption: `Couple Male` }, { quoted: m })
+                arus.sendMessage(m.chat, { image: { url: random.female }, caption: `Couple Female` }, { quoted: m })
+            }
+        break
+
+
 case 'neko':
    waifud = await axios.get('https://waifu.pics/api/sfw/neko')
               
@@ -839,7 +1208,7 @@ case 'neko':
       let buttonssMessage = {
        image: {url:waifud.data.url},
        caption:  `*Here is your 🐱Neko*`,
-      footer: '©MIZUHARA~Arus',
+      footer: '©Arus 2022',
       buttons: wbutsss,
       headerType: 4
       }
@@ -859,15 +1228,116 @@ case 'kemonomimi':
       let buttonssMessages = {
        image: {url:waifudd.data.url},
        caption:  `*Here You Go...*`,
-      footer: '©MIZUHARA~Arus',
+      footer: '©Arus 2022',
       buttons: wbuttsss,
       headerType: 4
       }     
             await arus.sendMessage(m.chat, buttonssMessages,{ quoted:m }).catch(err => {
                     return('error..')
                 })
-                break     
+                break   
+                case 'haigusha' : 
+const waifu= await axios.get(`https://reina-api.vercel.app/api/mwl/random`)
+//const avv = `❤️ *Name : ${waifu.data.name}*\n\n💎️ Description : ${waifu.data.description}\n\n💚️ Source : ${waifu.data.series.name}\n\n✨️ URL: ${waifu.data.url}`
+//console.log(hai.data.display_picture)
+let hait = "";
+hait += `💙 *Name: ${waifu.data.name}*\n`;
+if (waifu.data.original_name !== "" && waifu.data.original_name !== null)
+    hait += `💚 *Original Name: ${waifu.data.original_name}*\n`;
+if (waifu.data.weight !== null) hait += `⚖ *Weight: ${waifu.data.weight}*\n`;
+if (waifu.data.height !== null) hait += `📍 *Height: ${waifu.height}*\n`;
+if (waifu.data.bust !== null) hait += `💠 *Bust: ${waifu.data.bust}*\n`;
+if (waifu.data.hip !== null) hait += `🎗 *Hip: ${waifu.data.hip}*\n`;
+if (waifu.data.waist !== null) hait += `🎀 *Waist: ${waifu.data.waist}*\n`;
+if (waifu.data.blood_type !== null)
+    hait += `🩸 *Blood Type: ${waifu.data.blood_type}*\n`;
+if (waifu.data.origin !== null && waifu.data.origin !== "") hait += `🎐 *Origin: ${waifu.data.origin}*\n`;
+if (waifu.data.age !== null&& waifu.data.age !== 0) hait += `🎂 *Age: ${waifu.data.age}*\n`;
+if (waifu.data.likes !== null) hait += `🖤 *Likes: ${waifu.data.likes}*\n`;
+hait += `🏅 *Like Rank: ${waifu.data.like_rank}*\n`;
+hait += `📈 *Popularity Rank: ${waifu.data.popularity_rank}*\n\n`;
+hait += `💛 *Source: ${waifu.data.series.name}*\n\n`;
+hait += `🌐 *URL: ${waifu.data.url}*\n\n`;
+hait += `❤ *Description:* ${waifu.data.description}\n`;
+console.log(hait)
 
+const suu =tb.set(`${m.chat}.hp`,waifu.data.display_picture )
+//console.log(suu)
+
+   const wname = ` ${waifu.data.name}`
+   //var wan = wname.replace(' (husbu)', '')
+   const wanarr = [wname]
+   await fs.writeFileSync(`./src/${m.sender}.json`, JSON.stringify(wanarr))
+   const haibu=[{buttonId:'=marry',buttonText:{displayText:'💕 Marry'},type:1},
+   {buttonId:'=divorce',buttonText:{displayText:'💔 Divorce'},type:1}]
+   const haib={
+ image:{url:waifu.data.display_picture},
+ caption:hait,
+buttons:haibu,
+footer:'ARUS 2022',
+headerType:4
+   }
+arus.sendMessage(m.chat,haib,{quoted:m})
+console.log(waifu.data.name)
+break
+
+case'marry':
+case'claim':
+const hp = tb.get(`${m.chat}.hp`)
+ tb.set(`${m.sender}.hp`,hp)
+const ssar = JSON.parse(fs.readFileSync('./src/hai.json'))
+const hs = fs.readFileSync(`./src/${m.sender}.json`)
+    const hs1 = JSON.parse(hs)
+    try {
+        
+    pfp=await arus.profilePictureUrl(m.sender, 'image')
+
+      } catch (e) {
+  //let [pfp ] = await Promise.all([ contacts.getProfilePicUrl(contacts)])
+  pfp ='https://steamuserimages-a.akamaihd.net/ugc/954087817129084207/5B7E46EE484181A676C02DFCAD48ECB1C74BC423/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
+// 
+}
+    if (ssar.includes(hs1[0])) {
+       
+        await m.reply('Already Taken! 💔️')
+
+    } else {
+       
+        tb.set(`${m.sender}.haigusha`, hs1[0])
+     
+            ssar.push(hs1[0])
+           
+            fs.writeFileSync('./src/hai.json', JSON.stringify(ssar))
+            const thu=axios.get(`https://api.popcat.xyz/ship?user1=${hp}&user2=${pfp}`)
+            console.log(thu)
+            
+  
+            const sp = `Congratulations! You are now married to *${hs1[0]}* 🎉️`
+        // await msg.reply( `Congratulations! You are now married to *${hs1[0]}* 🎉️`)
+        //msg.reply(mediacd,from,{caption: sp})
+       // const thuu=await getBuffer(thu)
+  //  arus.sendMessage(m.chat,{image:{url:thuu},caption:sp},{quoted:m})
+  m.reply(sp)
+}
+break
+
+
+case'divorce':
+if(isGroup){
+const none = 'none'
+//const mon = tb.get(`${sender}.gold`)
+//f(mon < 2000 )  return msg.reply('you broke. make sure you have atleast 2k gold before you marry')
+//tb.set(`${sender}.gold`,mon - 2000)
+ 
+const ds=fs.readFileSync(`./src/${m.sender}.json`)
+   const namee = tb.get(`${m.sender}.haigusha`)
+     tb.delete(`${m.sender}.haigusha`,ds[0])
+         await m.reply( `Sadddd! you have divorced ${namee}`)
+
+  //  tb.const(`${sender}.haigusha`)
+}
+
+break
 case 'anime':
 const { Anime } =require("@shineiichijo/marika")
     const client = new Anime();
@@ -944,7 +1414,6 @@ let srh = await manga.searchManga(q)
 arus.sendMessage(m.chat,{image:{url:srh.data[0].images.jpg.large_image_url},caption:mang},{quoted:m})   
 break
 
-
 case 'wallpaper':
 const { AnimeWallpaper } =require("anime-wallpaper")
 if(!q) m.reply('Tell me clearly what wallpaper you want?')
@@ -962,7 +1431,7 @@ var walb = [
       let wal = {
        image: {url:wallpaper[i].image},
        caption: `*Query :* ${q}`,
-      footer: '©MIZUHARA~Arus',
+      footer: '©Arus 2022',
       buttons: walb,
       headerType: 4
       }     
@@ -971,14 +1440,343 @@ var walb = [
                 })
 //arus.sendMessage(m.chat,{image:{url:wallpaper[i].image},caption:`*Query :* ${q}`})            
 break
+
+case 'cry':
+case 'kiss':
+case 'bully':
+case 'hug':
+case 'lick':
+case 'cuddle':
+case 'smug':
+case 'pat':
+case 'highfive':
+case 'bonk':
+case 'yeet':
+case 'blush':
+case 'wave':
+case 'smile':
+case 'handhold':
+case 'nom':
+case 'bite':
+case 'glomp':
+case 'kill':
+case 'slap':
+case 'cringe':
+case 'wink':
+case 'happy':
+case 'happy':
+case 'poke':
+case 'dance':
+var slap = await fetchJson(`https://api.waifu.pics/sfw/${command}`)
+var buff = await getBuffer(slap.url)
+var sgif = await GIFBufferToVideoBuffer(buff)
+  mentioned = mentionByTag
+let rtag =   await (mentioned[0])
+//const rtag=rtagg.map(v => v.id)
+let usep=m.sender
+const ment=[usep,rtag]
+let recp=``
+if(command=='cry'){
+    //console.log(recp)
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.cry} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]} ${reac.cry} @${rtag.split("@")[0]} `
+
+console.log(recp)
+}
+}
+if(command=='kiss'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.kiss} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.kiss}  @${rtag.split("@")[0]}`
+}
+console.log(recp)
+}
+if(command=='bite'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.bite} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.bite}  @${rtag.split("@")[0]}`
+}
+console.log(recp)
+}if(command=='bully'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.bully} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.bully}  @${rtag.split("@")[0]}`
+}
+console.log(recp)
+}if(command=='hug'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.hug} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.hug}  @${rtag.split("@")[0]}`
+}
+console.log(recp)
+}if(command=='lick'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.lick} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.lick}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}if(command=='cuddle'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.cuddle} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.cuddle}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}if(command=='pat'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.pat} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.pat}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}if(command=='smug'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.smug} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.smug}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}if(command=='highfive'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.highfive} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.highfive}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}if(command=='bonk'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.bonk} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.bonk}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}if(command=='yeet'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.yeet} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.yeet}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}if(command=='blush'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.blush} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.blush}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}if(command=='wave'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.wave} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}` 
+ recp=`@${m.sender.split("@")[0]}  ${reac.wave}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='smile'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.smile} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.smile}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='handhold'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.handhold} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.handhold}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='nom'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.nom} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.nom}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='glomp'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.glomp} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.glomp}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='kill'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.kill} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.kil}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='slap'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.slap} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.slap}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='cringe'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.cringe} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.cringe}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='wink'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.wink} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.wink}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='happy'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.happy} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.happy}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='poke'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.poke} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.poke}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+if(command=='dance'){
+if(!q){
+     recp=`@${m.sender.split("@")[0]} ${reac.dance} themselves`
+     console.log(recp)
+}else{
+const rcpp=`@${rtag.split("@"[0])}`
+ recp=`@${m.sender.split("@")[0]}  ${reac.dance}  @${rtag.split("@")[0]}  `
+}
+console.log(recp)
+}
+arus.sendMessage(m.chat,{video: sgif,gifPlayback:true,mentions:ment,caption:recp},{quoted:m})
+
+break
+case 'pick':
+if(!q) return m.reply('Shall I pick you?')
+  let member = participants.map(u => u.id)
+            let me = m.sender
+            let pick = member[Math.floor(Math.random() * member.length)]
+arus.sendMessage(m.chat,{text:`${q} in this group\n *@${pick.split("@")[0]}*`,mentions:[pick]},{quoted:m})
+break
+
+  case 'bcgc': case 'bcgroup': {
+                if (!isCreator) throw mess.owner
+                if (!text) throw `Text mana?\n\nExample : ${prefix + command} fatih-san`
+                let getGroups = await arus.groupFetchAllParticipating()
+                let groups = Object.entries(getGroups).slice(0).map(entry => entry[1])
+                let anu = groups.map(v => v.id)
+                m.reply(` Broadcasting in ${anu.length} Group Chat, in ${anu.length * 1.5} seconds`)
+                for (let i of anu) {
+                    await sleep(1500)
+                    
+                      let txt = `「 MIZUHARA BROADCAST 」\n\n${text}\n\nRegards~${pushname}`
+const bcbut=[{buttonId:"=info",buttonText:{displayText:"Info"},type:1},
+{buttonId:"=creator",buttonText:{displayText:"Creator"},type:1},
+{buttonId:"=mods",buttonText:{displayText:"Arus Team"},type:1}]
+
+const bcbutt={
+    image: fs.readFileSync('./bc.jpg'),
+    caption:txt,
+    footer:`©Arus 2022`,
+    buttons: bcbut,
+    headerType:1
+} 
+//const stick=fs.readFileSync(`./src/right.webp`)
+//await arus.sendMessage(m.chat,{sticker:stick},{quoted:m})      
+await arus.sendMessage(i,bcbutt)
+                    }
+                m.reply(`Successfuly Broadcasted in ${anu.length} Groups`)
+            }
+            break
+
+  case 'listgc': {
+                 let anu = await store.chats.all().filter(v => v.id.endsWith('@g.us')).map(v => v.id)
+                 let teks = `⬣ *GROUP CHAT LIST*\n\nTotal Group : ${anu.length} Group\n\n`
+                 for (let i of anu) {
+                     let metadata = await arus.groupMetadata(i)
+                     teks += `⬡ *Name :* ${metadata.subject}\n⬡ *Owner :* @${metadata.owner.split('@')[0]}\n⬡ *ID :* ${metadata.id}\n⬡ *Made :* ${moment(metadata.creation * 1000).tz('Asia/Kolkata').format('DD/MM/YYYY HH:mm:ss')}\n⬡ *Member :* ${metadata.participants.length}\n\n────────────────────────\n\n`
+                 }
+                 arus.sendTextWithMentions(m.chat, teks, m)
+             }
+             break            
             default:
 arus.sendMessage(m.chat,{text:`Baka!! Try using the commands from help list`},{quoted:m})
         }
         
 
     } catch (err) {
+        console.log(util.format(err))
         const time = moment.tz('Asia/Kolkata').format('DD/MM HH:mm:ss')
-        arus.sendMessage("120363041582995306@g.us",{text:`*Time:* ${time}\n\n`+`*ERROR:* ${util.format(err)}`})
+        arus.sendMessage("120363039020236931@g.us",{text:`*Time:* ${time}\n\n`+`*ERROR:* ${util.format(err)}`})
     
     }
 }
@@ -986,8 +1784,8 @@ arus.sendMessage(m.chat,{text:`Baka!! Try using the commands from help list`},{q
 
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
-	fs.unwatchFile(file)
-	console.log(chalk.redBright(`Update ${__filename}`))
-	delete require.cache[file]
-	require(file)
+    fs.unwatchFile(file)
+    console.log(chalk.redBright(`Update ${__filename}`))
+    delete require.cache[file]
+    require(file)
 })

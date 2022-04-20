@@ -1,3 +1,5 @@
+
+
 const fs = require('fs')
 const chalk = require('chalk')
 
@@ -12,11 +14,39 @@ global.APIKeys = {
 }
 
 // Other
-global.owner = ['']
+global.owner = ['918231033230']
 global.packname = 'Mizuhara'
 global.prefix= ['=']
-global.author = ''
+global.author = 'Arus'
 global.sessionName = 'arus'
+global.reac = {
+            cry:'Cried with',
+            kiss: 'Kissed',
+            bully:'Bullied',
+            hug:'Hugged',
+            lick:'Licked',
+            cuddle:'Cuddled with',
+            pat: 'Patted',
+            smug: 'Smugged at',
+            highfive: 'High-fived',
+            bonk:'Bonked',
+            yeet: 'Yeeted',
+            blush: 'Blushed at',
+            wave: 'Waved at',
+            smile: 'Smiled at',
+            handhold: 'is Holding Hands with',
+            nom: 'is Eating with',
+            bite:'Bit',
+            glomp:'Glomped',
+            kill: 'Killed',
+            slap: 'Slapped',
+            cringe: 'Cringed at',
+            kick: 'Kicked',
+            wink: 'Winked at',
+            happy: 'is Happy with',
+            poke: 'Poked',
+            dance:'is Dancing with'
+        }
 global.mess = {
     success: '*Here you go...*',
     admin: '*Oops!! sorry dude this is only for admins*',

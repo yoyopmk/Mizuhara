@@ -1,1 +1,1 @@
-web: npm i pm2 -g pm2 && start heart.js && pm2 save && pm2 logs
+worker: npm i -g forever && forever heart.js
