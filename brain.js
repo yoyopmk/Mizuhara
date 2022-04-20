@@ -210,45 +210,99 @@ let buttonMessaged = {
       
 
 case 'help':
-if(!args.length>0){
+
 const hlp=`
-*Konichiwa 👋 ${pushname} Senpai*
-\`\`\`Ｉ'ｍ  Ｍｉｚｕｈａｒａ\`\`\` ( ❤️ω❤️ )
+ *U^I^U ♡ Konichiwa ${pushname} Senpai, I'm Mizuhara*
 
+🎋 \`\`\`Here are my listed commands, Have fun in using them:-\`\`\`
 
-*Basic Rules :-*
-📌 | Don't call Bot or else you'll get permanently ban
-📌 | Don't spam bot or else you'll be temporary ban
+🈸 *GENERAL* 🈸
 
- ➡️ | Use =faq for more information
+\`\`\`🎯 profile
 
-🔮 1. ᏀᎬΝᎬᎡᎪᏞ ᎷᎬΝႮ
-💎 *Description:* Use this if you want to see General Command List
-♦️ *Usage:* =help 1
+🎯 rank
 
-🔮 2. ᎷᎬᎠᏆᎪ ᎷᎬΝႮ
-💎 *Description:* Use this if you want to see Media Command List
-♦️ *Usage:* =help 2
+🎯 exp
 
-🔮 3. ᎪΝᏆᎷᎬ ᎷᎬΝႮ
-💎 *Description:* Use this if you want to see Anime Command List
-♦️ *Usage:* =help 3
+🎯 delete
 
-🔮 4. ᏀᎡϴႮᏢ ᎷᎬΝႮ
-💎 *Description:* Use this if you want to see Group Command List
-♦️ *Usage:* =help 4
+🎯 help
 
-🔮 5. ᏀᎪᎷᎬՏ ᎷᎬΝႮ
-💎 *Description:* Use this if you want to see Games Command List
-♦️ *Usage:* =help 5
+🎯 creator
 
-🔮 6. ႮͲᏆᏞՏ ᎷᎬΝႮ
-💎 *Description:* Use this if you want to see Utils Menu
-♦️ *Usage:* =help 6
+🎯 mods
 
-🏮 *_New commands will be added as per upcoming future updates_* 🏮
+🎯 info\`\`\`
+  
+⛩️ *ANIME* ⛩️
 
-© Powered By Arus`
+\`\`\`🎯 neko
+
+🎯 waifu
+
+🎯 holo
+
+🎯 fox_girl
+
+🎯 kemonomimi
+
+🎯 anime
+
+🎯 manga
+
+🎯 wallpaper\`\`\`
+
+❄️ *GROUP COMMANDS* ❄️
+
+\`\`\`🎯 ping
+
+🎯 add
+
+🎯 kick
+
+🎯 promote
+
+🎯 demote
+
+🎯 group open
+
+🎯 group close
+
+🎯 linkgc
+
+🎯 setgpfp
+
+🎯 enable/disable
+
+    🍂 antilink
+
+    🍂 events\`\`\`
+
+🍁 *UTILS* 🍁
+
+\`\`\`🎯 sticker
+
+🎯 toimg
+
+🎯 togif
+
+🎯 tourl\`\`\`
+
+🏷️ *MEDIA* 🏷️
+
+\`\`\`🎯 yts
+
+🎯 ytv
+
+🎯 yta
+
+🎯 play
+
+🎯 google
+
+🎯 image\`\`\`
+
+ 🍁 *©Powered by Arus* 🍁`
   const hhbut = [
 {buttonId: '=info', buttonText: {displayText: '📤 Info'}, type: 1},
 {buttonId: '=help 1', buttonText: {displayText: '🧧 Help 1'}, type: 1}
@@ -261,295 +315,9 @@ let hbutto = {
         headerType: 4
     }
 arus.sendMessage(m.chat,hbutto,{quoted:m})
-}
+
            //arus.sendMessage(m.chat,{video:fs.readFileSync('./src/help.mp4'),gifPlayback:true,caption:hlp},{quoted:m})
-if(args[0] == "1"){
-let hlp2=`
-|I{•------» GENERAL MENU «------•}I|
 
-⚜️ Command: Profile
-💎 Usage: =profile
-📕 Description: Display Users Profile 📜
-
-⚜️ Command: Rank
-💎 Usage: =rank
-📕 Description: Displays Users Rank 🥇
-
-⚜️ Command: Exp
-💎 Usage: =exp
-📕 Description: Displays Users Experience 🎖️
-
-⚜️ Command: Delete
-💎 Usage: =delete [tag bot message which you want to delete]
-📕 Description: Delete the messages which is sent by bot 🟥
-
-⚜️ Command: Creator
-💎 Usage: =creator
-📕 Description: Displays creator contact number 🪀
-
-⚜️ Command: Mods
-💎 Usage: =mods
-📕 Description: Display moderators list 📄
-
-⚜️ Command: Information
-💎 Usage: =info
-📕 Description: Get information about Mizuhara Bot 🤖
-
-
-© Powered By Arus`
- const hhbut = [
-{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
-{buttonId: '=help 2', buttonText: {displayText: '🧧 Help 2'}, type: 1}
-]
-let hbutto = {
-        image: {url:"https://telegra.ph/file/4f3cf3cc03896a1a73f58.jpg"},
-        caption: hlp2,
-        footer: '©Arus 2022',
-        buttons: hhbut,
-        headerType: 4
-    }
-arus.sendMessage(m.chat,hbutto,{quoted:m})
-}
-if(args[0] == "2"){
-let hlp2=`
-*|I{•------» Media Menu «------•}I|*
-
-⚜️ *Command:* YouTube Search
-💎 *Usage:* =yts [query]
-📕 *Description:* Searches Requested Topics on YouTube 🔍
-
-⚜️ *Command:* YouTube Audio
-💎 *Usage:* =yta [link]
-📕 *Description:* Downloads youtube audio from video ⬇️
-
-⚜️ *Command:* YouTube Video
-💎 *Usage:* =ytv [link]
-📕 *Description:* Download youtube videos ⬇️
-
-⚜️ *Command:* Play
-💎 *Usage:* =play [query]
-📕 *Description:* Play your requested song ▶️
-
-⚜️ *Command:* Google Searches
-💎 *Usage:* =google [query]
-📕 *Description:* Searches on the web 🔍
-
-⚜️ *Command:* Images
-💎 *Usage:* =images [query]
-📕 *Description:* Provides you images 
-
-⚜️ *Command:* Wallpaper
-💎 *Usage:* =wallpaper [query]
-📕 *Description:* Provides you wallpaper 
-
-© Powered By Arus
-`
- const hhbut = [
-{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
-{buttonId: '=help 3', buttonText: {displayText: '🧧 Help 3'}, type: 1}
-]
-let hbutto = {
-        image: {url:"https://telegra.ph/file/f7a1f49f02b62b652a760.jpg"},
-        caption: hlp2,
-        footer: '©Arus 2022',
-        buttons: hhbut,
-        headerType: 4
-    }
-arus.sendMessage(m.chat,hbutto,{quoted:m})
-}
-if(args[0] == "3"){
-let hlp2=`
-*|I{•------» Anime Menu «------•}I|*
-
-⚜️ *Command:* Waifu
-💎 *Usage:* =waifu
-📕 *Description:* Gives you random waifu images
-
-⚜️ *Command:* Neko
-💎 *Usage:* =neko
-📕 *Description:* Gives you random neko images
-
-⚜️ *Command:* Fox Girl Waifus
-💎 *Usage:* =fox_girl
-📕 *Description:* Gives you random fox_girl images
-
-⚜️ *Command:* Kemonomiomi
-💎 *Usage:* =kemonomiomi
-📕 *Description:* Gives you random kemonomiomi images
-
-⚜️ *Command:* Anime
-💎 *Usage:* =anime [Name]
-📕 *Description:* Gives you information about requested anime
-
-⚜️ *Command:* Manga
-💎 *Usage:* =manga [Name]
-📕 *Description:* Gives you detail about requested manga
-
-© Powered By Arus`
- const hhbut = [
-{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
-{buttonId: '=help 4', buttonText: {displayText: '🧧 Help 4'}, type: 1}
-]
-let hbutto = {
-        image: {url:"https://telegra.ph/file/e08646ace7e9a9da248da.jpg"},
-        caption: hlp2,
-        footer: '©Arus 2022',
-        buttons: hhbut,
-        headerType: 4
-    }
-arus.sendMessage(m.chat,hbutto,{quoted:m})
-}
-if(args[0] == "4"){
-let hlp2=`
-*|I{•------» GROUP MENU «------•}I|*
-
-⚜️ *Command:* Ping
-💎 *Usage:* =ping [Text/Your message]
-📕 *Description:* Tags all one in group with your message 💫
-
-⚜️ *Command:* Add
-💎 *Usage:* =add 9168327XXXXX
-📕 *Description:* Add Participants 
-
-⚜️ *Command:* Kick
-💎 *Usage:* =kick @taguser
-📕 *Description:* Kick members from group
-
-⚜️ *Command:* Promote
-💎 *Usage:* =promote @taguser
-📕 *Description:* Promotes user
-
-⚜️ *Command:* Demote
-💎 *Usage:* =demote @taguser
-📕 *Description:* Demotes user ⛔
-
-⚜️ *Command:* Group Open
-💎 *Usage:* =group open
-📕 *Description:* Change group settings to all participants
-
-⚜️ *Command:* Group Close
-💎 *Usage:* =group close
-📕 *Description:* Change group settings to only admins
-
-⚜️ *Command:* Group Link
-💎 *Usage:* =linkgc
-📕 *Description:* Gives you group link
-
-⚜️ *Command:* Change Group Profile Pic
-💎 *Usage:* =setgpfp [reply images/caption]
-📕 *Description:* Changes group profile pic
-
-⚜️ *Command:* Enable
-💎 *Usage:* =enable [option]
-♦️ *Option:* Antilink
-                       Event
-📕 *AntiLink-Description:* Kicks the participants who sends group link
-📕 *Events-Description:* Welcomes when participant join the group
-
-⚜️ *Command:* Disable
-💎 *Usage:* =disable [option]
-♦️ *Option:* Antilink
-                       Event
-                       📕 *AntiLink-Description:* Deactivate kick to the participants who sends group link
-                       📕 *Events-Description:*  Deactivates welcome when participant join the group
-
-© Powered By Arus
-`
- const hhbut = [
-{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
-{buttonId: '=help 5', buttonText: {displayText: '🧧 Help 5'}, type: 1}
-]
-let hbutto = {
-        image: {url:"https://telegra.ph/file/f7a1f49f02b62b652a760.jpg"},
-        caption: hlp2,
-        footer: '©Arus 2022',
-        buttons: hhbut,
-        headerType: 4
-    }
-arus.sendMessage(m.chat,hbutto,{quoted:m})
-}
-if(args[0] == "5"){
-let hlp2=`
-*|I{•------» Games Menu «------•}I|*
-
-​    >>>>>>> *ECONOMY* <<<<<<<
-
-⚜️ *Command:* Wallet
-💎 *Usage:* =wallet
-📕 *Description:* Displays your money in a wallet
-
-⚜️ *Command:* Give/Transfer Money
-💎 *Usage:* =give @user [Amount]
-📕 *Description:* Transfer Money 
-
-⚜️ *Command:* Daily
-💎 *Usage:* =daily
-📕 *Description:* Claims your daily money
-
-⚜️ *Command:* Rob
-💎 *Usage:* =rob @taguser
-📕 *Description:* Rob the person 
-
-⚜️ *Command:* Bank
-💎 *Usage:* =bank
-📕 *Description:* Displays your total amount in Bank
-
-⚜️ *Command:* Deposit
-💎 *Usage:* =deposit [Amount
-📕 *Description:* Deposit your money into bank from wallet
-
-⚜️ *Command:* Gamble
-💎 *Usage:* =gamble [Amount] [Left/Right]
-📕 *Description:* Gamble your money and get the chances to win x2 of your gambled money
-
-© Powered By Arus`
- const hhbut = [
-{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
-{buttonId: '=help 6', buttonText: {displayText: '🧧 Help 6'}, type: 1}
-]
-let hbutto = {
-        image: {url:"https://telegra.ph/file/01aeb7961d754e4c27323.jpg"},
-        caption: hlp2,
-        footer: '©Arus 2022',
-        buttons: hhbut,
-        headerType: 4
-    }
-arus.sendMessage(m.chat,hbutto,{quoted:m})
-}
-if(args[0] == "6"){
-let hlp2=`
-*|I{•------» Utils Menu «------•}I|*
- 
-⚜️ *Command:* Sticker
-💎 *Usage:* =sticker [caption/reply]
-📕 *Description:* Converts Img/Gifs in sticker
-
-⚜️ *Command:* To Image
-💎 *Usage:* =toimg [reply]
-📕 *Description:* Converts Stickers To Images
-
-⚜️ *Command:* To Gif
-💎 *Usage:* =togif [reply]
-📕 *Description:* Converts Video Stickers to Gif
-
-⚜️ *Command:* To URL
-💎 *Usage:* =tourl [caption/reply]
-📕 *Description:* Convert your img/videos/gif to link 
-
-© Powered By Arus`
- const hhbut = [
-{buttonId: '=help', buttonText: {displayText: '🧧 Help'}, type: 1},
-{buttonId: '=help 1', buttonText: {displayText: '🧧 Help 1'}, type: 1}
-]
-let hbutto = {
-        image: {url:"https://telegra.ph/file/d4aa25dd70b1e10daaeea.jpg"},
-        caption: hlp2,
-        footer: '©Arus 2022',
-        buttons: hhbut,
-        headerType: 4
-    }
-arus.sendMessage(m.chat,hbutto,{quoted:m})
-}
 break
     case'lead':
     case'leaderboard':
