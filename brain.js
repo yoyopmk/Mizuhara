@@ -613,8 +613,8 @@ case 'tourl': {
 //////////////////////////GROUP\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     case 'kick': {
         if (!m.isGroup) m.reply(mess.group)
-                if (!isBotAdmins) m.reply(mess.botAdmin)
-                if (!isAdmins) m.reply(mess.admin)
+                if (!isBotAdmins) return m.reply(mess.botAdmin)
+                if (!isAdmins) return m.reply(mess.admin)
         let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
         await arus.groupParticipantsUpdate(m.chat, [users], 'remove')
  arus.sendMessage(m.chat,{text:`Kicked @${users.split("@")[0]} successfuly `,contextInfo: { mentionedJid: [users] }})
@@ -622,8 +622,8 @@ case 'tourl': {
     break
     case 'add': {
         if (!m.isGroup) m.reply(mess.group)
-                if (!isBotAdmins) m.reply(mess.botAdmin)
-                if (!isAdmins) m.reply(mess.admin)
+                if (!isBotAdmins) return m.reply(mess.botAdmin)
+                if (!isAdmins) return m.reply(mess.admin)
         let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
         await arus.groupParticipantsUpdate(m.chat, [users], 'add')
         arus.sendMessage(m.chat,{text:`Added @${users.split("@")[0]} successfuly `,contextInfo: { mentionedJid: [users] }})
@@ -640,17 +640,17 @@ case 'tourl': {
     break
     case 'demote': {
         if (!m.isGroup) m.reply(mess.group)
-                if (!isBotAdmins) m.reply(mess.botAdmin)
-                if (!isAdmins) m.reply(mess.admin)
+                if (!isBotAdmins) return m.reply(mess.botAdmin)
+                if (!isAdmins) return m.reply(mess.admin)
         let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
         await arus.groupParticipantsUpdate(m.chat, [users], 'demote')
         arus.sendMessage(m.chat,{text:`OOPs!! looks like someone demoted @${users.split("@")[0]}`,contextInfo: { mentionedJid: [users] }})
    }
     break
   case 'setdesc': {
-                if (!m.isGroup) m.reply(mess.group)
-                if (!isBotAdmins) m.reply(mess.botAdmin)
-                if (!isAdmins) m.reply(mess.admin)
+                if (!m.isGroup)  m.reply(mess.group)
+                if (!isBotAdmins) return m.reply(mess.botAdmin)
+                if (!isAdmins) return m.reply(mess.admin)
                 if (!text) m.reply('Text ?')
                 await arus.groupUpdateDescription(m.chat, text)
             m.reply('*Group Description Changed successfuly*')
@@ -670,8 +670,8 @@ case 'setppgroup': case 'setppgrup': case 'setgpfp': {
 case 'tagall':
 case 'ping':
   if (!m.isGroup) m.reply(mess.group)
-                if (!isBotAdmins) m.reply(mess.botAdmin)
-                if (!isAdmins) m.reply(mess.admin) 
+                if (!isBotAdmins) return m.reply(mess.botAdmin)
+                if (!isAdmins) return m.reply(mess.admin) 
 
 if(q) { var Text =`📌 *Message - ${q}*\n*🍁 Group name - ${groupName}*` } else {  var Text = `*${groupName}*`}
 
@@ -687,8 +687,8 @@ break
 
   case 'group': {
                 if (!m.isGroup) m.reply(mess.group)
-                if (!isBotAdmins) m.reply(mess.botAdmin)
-                if (!isAdmins) m.reply(mess.admin)
+                if (!isBotAdmins) return m.reply(mess.botAdmin)
+                if (!isAdmins) return m.reply(mess.admin)
              if (args[0] === 'open'){
                 await arus.groupSettingUpdate(m.chat, 'not_announcement').then((res) => m.reply(`*Group open*`)).catch((err) => m.reply(jsonformat(err)))
              } else if (args[0] === 'close'){
