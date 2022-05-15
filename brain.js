@@ -1496,6 +1496,8 @@ if(!q) return m.reply('Shall I pick you?')
 arus.sendMessage(m.chat,{text:`${q} in this group\n *@${pick.split("@")[0]}*`,mentions:[pick]},{quoted:m})
 break
 
+
+
   case 'bcgc': case 'bcgroup': {
                 if (!isCreator) throw mess.owner
                 if (!text) throw `Text mana?\n\nExample : ${prefix + command} fatih-san`
