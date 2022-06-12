@@ -673,7 +673,9 @@ m.reply("An Error Occurred")
 if (!isAdmins) return m.reply("❌ This is an Admin only Command")
 if (!isBotAdmins) return m.reply("❌ Cannot execute without being admin")
 	try {
-        let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+                            let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
+	  if (!users) return m.reply("❌ Couldn't find any userID in context")
         await arus.groupParticipantsUpdate(m.chat, [users], 'remove')
  arus.sendMessage(m.chat,{text:`Kicked @${users.split("@")[0]} successfuly `,contextInfo: { mentionedJid: [users] }})
  	} catch {
@@ -686,7 +688,9 @@ if (!isBotAdmins) return m.reply("❌ Cannot execute without being admin")
 if (!isAdmins) return m.reply("❌ This is an Admin only Command")
 if (!isBotAdmins) return m.reply("❌ Cannot execute without being admin")
 	try {
-        let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+                            let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
+	  if (!users) return m.reply("❌ Couldn't find any userID in context")
         await arus.groupParticipantsUpdate(m.chat, [users], 'promote')
          arus.sendMessage(m.chat,{text:`woh woh!! looks like someone promoted @${users.split("@")[0]}`,contextInfo: { mentionedJid: [users] }})
 		 			} catch {
@@ -698,9 +702,10 @@ if (!isBotAdmins) return m.reply("❌ Cannot execute without being admin")
 		if (!m.isGroup) return m.reply("Sorry its a group command.Couldn't process the request!")
 if (!isAdmins) return m.reply("❌ This is an Admin only Command")
 if (!isBotAdmins) return m.reply("❌ Cannot execute without being admin")
-        let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 	try {
-        let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+                            let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
+	  if (!users) return m.reply("❌ Couldn't find any userID in context")
         await arus.groupParticipantsUpdate(m.chat, [users], 'demote')
         arus.sendMessage(m.chat,{text:`OOPs!! looks like someone demoted @${users.split("@")[0]}`,contextInfo: { mentionedJid: [users] }})
 					} catch {
@@ -919,7 +924,9 @@ break
  case 'ban': {
 	 if (!isCreator) return m.reply("📍The user of this command must be the owner of the bot")
 		 try {
-                      const users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+                            let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
+	  if (!users) return m.reply("❌ Couldn't find any userID in context")
 	 user.findOne({ id : users }).then(async(usr) => {
          if (!usr) {
 			 //console.log(usr.ban)
@@ -944,7 +951,9 @@ return m.reply("❌ Couldn't find any userID in context")
    case 'unban':{
 	   if (!isCreator) return m.reply("📍The user of this command must be the owner of the bot")
 		   try {
-                      const users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+                            let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
+	  if (!users) return m.reply("❌ Couldn't find any userID in context")
 
 	 user.findOne({ id : users }).then(async(usr) => {
          if (!usr) {
@@ -1334,7 +1343,8 @@ case 'pat':{
 		let usep = m.sender
 let recp=``
 try {
-users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+      let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
 
  ment=[usep,users]
 } catch {
@@ -1366,7 +1376,8 @@ case 'hug':{
 		let usep = m.sender
 let recp=``
 try {
-users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+      let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
 
  ment=[usep,users]
 } catch {
@@ -1398,7 +1409,8 @@ case 'kiss':{
 		let usep = m.sender
 let recp=``
 try {
-users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+      let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
 
  ment=[usep,users]
 } catch {
@@ -1430,7 +1442,8 @@ case 'slap':{
 		let usep = m.sender
 let recp=``
 try {
-users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+      let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
 
  ment=[usep,users]
 } catch {
@@ -1462,7 +1475,8 @@ case 'cuddle':{
 		let usep = m.sender
 let recp=``
 try {
-users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+      let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
 
  ment=[usep,users]
 } catch {
@@ -1494,7 +1508,8 @@ case 'kick':{
 		let usep = m.sender
 let recp=``
 try {
-users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+      let mention = mentionByTag
+      let users = await (mention[0]) || m.msg.contextInfo.participant
 
  ment=[usep,users]
 } catch {
