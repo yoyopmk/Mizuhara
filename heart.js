@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 const { Pool } = require("pg");
 main().catch(err => console.log(err));
 const proConfig = {
-    connectionString: process.env.pgdb,
+    connectionString: pgdb,
     ssl: {
         rejectUnauthorized: false,
     },
