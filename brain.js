@@ -159,7 +159,7 @@ if (budy.includes(`//chat.whatsapp.com/${response}`)) return
 
         // Push Message To Console && Auto Read
         if (m.message) {
-            arus.sendReadReceipt(m.chat, m.sender, [m.key.id])
+           // arus.sendReadReceipt(m.chat, m.sender, [m.key.id])
             console.log(chalk.black(chalk.bgWhite('[ ICHIKA ]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('=> FROM'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('=> MSG'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
         }
     let Iban = await user.findOne({ id: m.sender})
