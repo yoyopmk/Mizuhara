@@ -9,7 +9,7 @@ if (!gg) {
 
 global.owner = gg.split(",");
 global.mongodb = process.env.MONGODB || "none";
-global.pgdb = process.env.PGDB || "none";
+global.pgdb = process.env.DATABASE_URL || "none";
 global.port = process.env.PORT || 8080;
 (global.packname = process.env.PACKNAME || "kaguya"),
   (global.prefix = process.env.PREFIX || "-"),
