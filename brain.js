@@ -252,7 +252,7 @@ break
 ⭐ 𝐂𝐎𝐌𝐌𝐀𝐍𝐃 𝐋𝐈𝐒𝐓 ⭐
 
 ━━━━『🍁Dev🍁』━━━━
-❐ update, broadcast, ban, unban, chatid, join
+❐ update, broadcast, ban, unban, chatid, join, session
 
 ━━━『🍀General🍀』━━━
 ❐ help, delete, info, rank, profile
