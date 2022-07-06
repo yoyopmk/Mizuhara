@@ -1387,8 +1387,7 @@ case 'pat':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1420,8 +1419,7 @@ case 'hug':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1453,8 +1451,7 @@ case 'kiss':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1486,8 +1483,7 @@ case 'slap':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1519,8 +1515,7 @@ case 'cuddle':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1552,8 +1547,7 @@ case 'kick':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1578,7 +1572,7 @@ console.log(recp)
         console.log(error);
     }
 }
-break 
+break
  case 'waifu': {
                let waifud = await axios.get('https://waifu.pics/api/sfw/waifu')
  arus.sendMessage(m.chat, { image: { url: waifud.data.url }, caption: "Here you go" }, { quoted: m })
