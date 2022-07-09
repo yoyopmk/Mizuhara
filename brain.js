@@ -7,6 +7,7 @@ const chalk = require('chalk')
 const { exec, spawn, execSync } = require("child_process")
 const axios = require('axios')
 const path = require('path')
+const { RandomPHUB } = require('discord-phub');
 const os = require('os')
 const { Character } = require('mailist')
 const moment = require('moment-timezone')
@@ -40,8 +41,75 @@ const { tmpdir } = require("os");
 const { readFile } = require ("fs/promises")
 const nHentai = require("shentai")                              
 const db = require('quick.db')
+const nsfw = new RandomPHUB((unique = true));
+
 module.exports = arus = async (arus, m, chatUpdate, store) => {
     try {
+	   const arr = [
+  '3d-porn',
+  'aesthetic',
+  'amateur',
+  'anal',
+  'asian',
+  'asmr',
+  'ass',
+  'bath-shower',
+  'bdsm',
+  'boobs',
+  'cosplay',
+  'creampie',
+  'cuckhold',
+  'cumshots',
+  'dilf',
+  'double-penetration',
+  'ebony',
+  'feet',
+  'femdom',
+  'fisting',
+  'food-play',
+  'funny',
+  'furry',
+  'glory-hole',
+  'goth',
+  'hands',
+  'hentai-no-loli',
+  'hentai',
+  'horror',
+  'interracial',
+  'joi',
+  'lactation',
+  'latin',
+  'lgbt-bisexual',
+  'lgbt-lesbian',
+  'lgbt-transgender',
+  'lgbt-twink',
+  'lingerie',
+  'massage',
+  'mature',
+  'milf',
+  'naked-wrestling',
+  'oral',
+  'orgy',
+  'pegging',
+  'petite',
+  'plus-size',
+  'pornstar',
+  'pov',
+  'public',
+  'pussy',
+  'rimming',
+  'rough',
+  'solo',
+  'squirting',
+  'tattoos-piercings',
+  'tease',
+  'thighs',
+  'threesomes',
+  'toys',
+  'uniform',
+  'vintage',
+  'watersports',
+];
         var body = (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
         var budy = (typeof m.text == 'string' ? m.text : '')
         const icmd = body.startsWith(prefix)
@@ -1576,6 +1644,14 @@ break
  case 'waifu': {
                let waifud = await axios.get('https://waifu.pics/api/sfw/waifu')
  arus.sendMessage(m.chat, { image: { url: waifud.data.url }, caption: "Here you go" }, { quoted: m })
+ }
+                break  
+		       
+case 'sex': {
+		let no = Math.floor(Math.random() * 64);
+  		const url1 = nsfw.getRandomInCategory(arr[no], 'jpg');
+               let sex = await axios.get(url1)
+ arus.sendMessage(m.chat, { image: { url: sex.data.url }, caption: "Here you go" }, { quoted: m })
  }
                 break  
  case 'couplepp': case 'ppcouple': {
