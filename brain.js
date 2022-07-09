@@ -1650,8 +1650,10 @@ break
 case 'sex': {
 		let no = Math.floor(Math.random() * 64);
   		const url1 = nsfw.getRandomInCategory(arr[no], 'jpg');
+		console.log('url', url1);
                let sex = await axios.get(url1)
- arus.sendMessage(m.chat, { image: { url: sex.data.url }, caption: "Here you go" }, { quoted: m })
+	       console.log('data', sex);
+ //arus.sendMessage(m.chat, { image: { url: sex.data.url }, caption: "Here you go" }, { quoted: m })
  }
                 break  
  case 'couplepp': case 'ppcouple': {
