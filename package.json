@@ -32,6 +32,7 @@
     "canvacord": "^5.2.3",
     "canvas": "^2.9.1",
     "cfonts": "^2.10.0",
+    "discord-phub": "^1.0.7",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.10",
     "child_process": "^1.0.2",
