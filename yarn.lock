@@ -1653,6 +1653,11 @@ discord-canvas@^1.4.1:
     fortnite-9812 "^1.0.4"
     fs "^0.0.1-security"
 
+discord-phub@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/discord-phub/-/discord-phub-1.0.7.tgz#a54982ce1cd432cf52e6eb4390af6bd58faa2fa9"
+  integrity sha512-cpTQux59Fg8bAtOnznOLmNfesEhplbrwZYbMwap7lM+AMsvOU/Ly/PGRUwSjWcgR71mEw3PUc2k7+qwbdsRcxQ==
+
 discord-xp@^1.1.16:
   version "1.1.16"
   resolved "https://registry.yarnpkg.com/discord-xp/-/discord-xp-1.1.16.tgz#4bb41044398ab705af4b239a536c68e66510b973"
@@ -2514,9 +2519,9 @@ htmlparser2@^8.0.1:
     entities "^4.3.0"
 
 http-cache-semantics@^4.0.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/http-cache-semantics/-/http-cache-semantics-4.1.0.tgz#49e91c5cbf36c9b94bcfcd71c23d5249ec74e390"
-  integrity sha512-carPklcUh7ROWRK7Cv27RPtdhYhUsela/ue5/jKzjegVvXDqM2ILE9Q2BGn9JZJh1g87cp56su/FgQSzcWS8cQ==
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/http-cache-semantics/-/http-cache-semantics-4.1.1.tgz#abe02fcb2985460bf0323be664436ec3476a6d5a"
+  integrity sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==
 
 http-errors@2.0.0:
   version "2.0.0"
