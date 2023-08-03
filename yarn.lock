@@ -1653,6 +1653,11 @@ discord-canvas@^1.4.1:
     fortnite-9812 "^1.0.4"
     fs "^0.0.1-security"
 
+discord-phub@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/discord-phub/-/discord-phub-1.0.7.tgz#a54982ce1cd432cf52e6eb4390af6bd58faa2fa9"
+  integrity sha512-cpTQux59Fg8bAtOnznOLmNfesEhplbrwZYbMwap7lM+AMsvOU/Ly/PGRUwSjWcgR71mEw3PUc2k7+qwbdsRcxQ==
+
 discord-xp@^1.1.16:
   version "1.1.16"
   resolved "https://registry.yarnpkg.com/discord-xp/-/discord-xp-1.1.16.tgz#4bb41044398ab705af4b239a536c68e66510b973"
@@ -5429,9 +5434,9 @@ window-size@^1.1.1:
     is-number "^3.0.0"
 
 word-wrap@~1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
-  integrity sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.5.tgz#d2c45c6dd4fbce621a66f136cbe328afd0410b34"
+  integrity sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==
 
 wrap-ansi@^6.2.0:
   version "6.2.0"
