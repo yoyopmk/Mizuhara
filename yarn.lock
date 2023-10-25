@@ -1377,9 +1377,9 @@ core-util-is@~1.0.0:
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
 
 crypto-js@^4.0.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
-  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.2.0.tgz#4d931639ecdfd12ff80e8186dba6af2c2e856631"
+  integrity sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==
 
 crypto-random-string@^1.0.0:
   version "1.0.0"
@@ -1652,6 +1652,11 @@ discord-canvas@^1.4.1:
     fortnite "^4.3.2"
     fortnite-9812 "^1.0.4"
     fs "^0.0.1-security"
+
+discord-phub@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/discord-phub/-/discord-phub-1.0.7.tgz#a54982ce1cd432cf52e6eb4390af6bd58faa2fa9"
+  integrity sha512-cpTQux59Fg8bAtOnznOLmNfesEhplbrwZYbMwap7lM+AMsvOU/Ly/PGRUwSjWcgR71mEw3PUc2k7+qwbdsRcxQ==
 
 discord-xp@^1.1.16:
   version "1.1.16"
